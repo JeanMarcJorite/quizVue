@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Les questionnaires : </h1>
+
+    {% if questionnaire%}
+
+    {% for q in questionnaire %}
+    <a href="{{ url_for('questionnaire', questionnaire_id=q.id) }}">{{ q.name }}</a>
+    {% endfor %}
+
+    {% else %}
+        <p>Il n'y a pas de questionnaire</p>
+    {% endif %}
+    
+</body>
+</html>

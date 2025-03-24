@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+    <h1> {{ questionnaire.name }} </h1>
+
+        {% if liste_questions %}
+
+        {% for q in liste_questions %}
+        <p>{{ q.title }}</p>
+        {% endfor %}
+
+        {% else %}
+            <p>Il n'y a pas de question</p>
+        {% endif %}
+    
+</body>
+</html>
