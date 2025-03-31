@@ -154,8 +154,8 @@ export default {
                 .then(response => response.json())
                 .then(json => {
                     this.question.push(questionData);
-                    location.reload();
                 });
+              this.showInput = false;
         },
 
   },
@@ -209,12 +209,12 @@ export default {
               </div>
             </div>
             <div v-if="typeSelectionnée == 'simpleQuestion'">
-              <button @click="addQuestionSimple" class="btn btn-success">Valider</button>
             </div>
             <div v-if="typeSelectionnée == 'multipleChoiceQuestion'">
-              <button @click="addQuestionMultiple" class="btn btn-success">Valider</button>
             </div>
           </div>
+          <button @click="addQuestion" class="btn btn-success">Valider</button>
+
         </div>
       </div>
 
