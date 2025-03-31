@@ -55,6 +55,7 @@ export default {
 
     modifyQuiz: async function ({ id, name }) {
       try {
+        console.log("id:", id, "name:", name);
         const response = await fetch(`http://127.0.0.1:5000/quiz/api/v1/quiz/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -63,8 +64,10 @@ export default {
 
         if (!response.ok) throw new Error("Échec de la requête");
 
+        
         const rep = await response.json();
         if (rep.quiz) {
+          console.log("rep:", rep);
           this.data = this.data.map(quiz => {
             if (quiz.id === id) {
               return rep.quiz;

@@ -82,8 +82,10 @@ def create_question(quiz_id):
 
     db.session.add(q)
     db.session.commit()
+    
+    
 
-    return jsonify({'result': True}), 201
+    return jsonify({'question': q.to_json()}), 201
 
 
 @app.route("/quiz/api/v1/quiz/<int:quiz_id>/<int:question_id>",
@@ -121,17 +123,24 @@ def update_quizz(quiz_id):
     return jsonify({'quiz': q.to_json()}), 200
 
 
-@app.route("/quiz/api/v1/quiz/<int:quiz_id>/<int:question_id>",
-           methods=['PUT'])
-def update_question(question_id, quiz_id):
-    q = Question.query.get(question_id)
-    if request.json['questionType'] == "simpleQuestion":
-        q.title = request.json['title']
-        q.reponse = request.json['reponse']
+@app.route("/quiz/api/v1/quiz/<int:quiz_id>/<int:question_id>", methods=['PUT'])
+def update_question(quiz_id, question_id):
+    question = Question.query.filter_by(id=question_id, questionnaire_id=quiz_id).first()
+    if not question:
+        return jsonify({'error': 'Question not found'}), 404
+
+    data = request.json
+    question.title = data.get('title', question.title)
+    if(question.questionType == "simpleQuestion"):
+        question.reponse = data.get('reponse', question.reponse)
     else:
-        q.title = request.json['title']
-        q.proposition1 = request.json['proposition1']
-        q.proposition2 = request.json['proposition2']
-        q.bonne_reponse = request.json['bonne_reponse']
+        question.proposition1 = data.get('proposition1', question.proposition1)
+        question.proposition2 = data.get('proposition2', question.proposition2)
+        question.bonne_reponse = data.get('bonne_reponse', question.bonne_reponse)
+    
     db.session.commit()
-    return jsonify({'result': True}), 201
+
+    return jsonify({'question': question.to_json()}), 200
+
+
+
